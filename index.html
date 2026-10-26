@@ -1,0 +1,407 @@
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Визитка — Python-разработчик</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --accent: #38bdf8;
+    --accent2: #a78bfa;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    background: radial-gradient(ellipse at top, #1e293b 0%, #0f172a 70%);
+  }
+  .avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; font-weight: 700; color: #0f172a;
+    margin: 0 auto 24px;
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.4);
+  }
+  .hero h1 { font-size: 2.2rem; margin-bottom: 8px; }
+  .hero .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 4px; }
+  .hero .university { color: var(--accent); font-size: 0.95rem; margin-top: 12px; }
+  .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+  .badge {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    color: var(--accent);
+    padding: 6px 16px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600;
+  }
+
+  /* Sections */
+  section { padding: 50px 0; }
+  section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section h2::before {
+    content: '';
+    width: 4px; height: 24px;
+    background: linear-gradient(var(--accent), var(--accent2));
+    border-radius: 2px;
+  }
+  .section-lead {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 32px;
+    max-width: 720px;
+  }
+
+  /* Skills grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .skill-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+  }
+  .skill-card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+  .skill-card h3 { font-size: 1.05rem; margin-bottom: 8px; color: var(--accent); }
+  .skill-card .skill-desc {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-card ul { list-style: none; }
+  .skill-card li {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 5px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .skill-card li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent2);
+  }
+  .skill-card li strong { color: var(--text); font-weight: 600; }
+
+  /* Level bars */
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .level-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+  .level-head {
+    display: flex; justify-content: space-between;
+    font-size: 0.9rem; margin-bottom: 8px;
+  }
+  .level-head span:last-child { color: var(--accent); font-weight: 600; }
+  .bar {
+    height: 8px;
+    background: #0b1220;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  }
+
+  /* Contacts */
+  .contacts { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .contact-link {
+    display: flex; align-items: center; gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .contact-link:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 1.6rem; }
+    .avatar { width: 90px; height: 90px; font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="container">
+    <div class="avatar">В</div>
+    <h1>Чернова Варвара</h1>
+    <p class="subtitle">Python-разработчик · Desktop & REST</p>
+    <p class="university">СПбГУТ им. М. А. Бонч-Бруевича · 2 курс<br>«Интеллектуальные информационные системы и технологии»</p>
+    <div class="badges">
+      <span class="badge">Python 3</span>
+      <span class="badge">SQLAlchemy</span>
+      <span class="badge">Docker</span>
+      <span class="badge">asyncio</span>
+      <span class="badge">Git</span>
+      <span class="badge">pytest</span>
+    </div>
+  </div>
+</header>
+
+<!-- SKILLS -->
+<section>
+  <div class="container">
+    <h2>Навыки</h2>
+    <p class="section-lead">
+      а также мой уровень владения ими
+    </p>
+
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="icon">🐍</div>
+        <h3>Python 3</h3>
+        <p class="skill-desc">Основной язык программирования.</p>
+        <ul>
+          <li><strong>ООП и структура кода:</strong> классы, наследование, модули, пакеты</li>
+          <li><strong>Стандартная библиотека:</strong> os, pathlib, json, datetime, logging</li>
+          <li><strong>Работа с зависимостями:</strong> pip, venv, requirements.txt</li>
+          <li><strong>Типизация:</strong> аннотации типов, mypy (базово)</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">🖥️</div>
+        <h3>Desktop-приложения</h3>
+        <p class="skill-desc">Создание настольных приложений с графическим интерфейсом.</p>
+        <ul>
+          <li><strong>GUI:</strong> Tkinter / PyQt (базовый уровень)</li>
+          <li><strong>Архитектура:</strong> разделение логики и интерфейса</li>
+          <li><strong>Подключение к БД:</strong> работа с MySQL из приложения</li>
+          <li><strong>Сборка:</strong> подготовка приложения к запуску на другой машине</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">🌐</div>
+        <h3>REST-сервисы</h3>
+        <p class="skill-desc">Разработка простых HTTP-сервисов и API.</p>
+        <ul>
+          <li><strong>HTTP-методы:</strong> GET, POST, PUT, DELETE</li>
+          <li><strong>Формат данных:</strong> JSON, структура запросов и ответов</li>
+          <li><strong>Маршрутизация:</strong> обработка эндпоинтов, коды ответов</li>
+          <li><strong>Взаимодействие с клиентом:</strong> запросы из Python и браузера</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">🗄️</div>
+        <h3>MySQL и SQLAlchemy</h3>
+        <p class="skill-desc">Работа с реляционными базами данных через ORM и чистый SQL.</p>
+        <ul>
+          <li><strong>SQL-запросы:</strong> SELECT, JOIN, INSERT, UPDATE, WHERE, GROUP BY</li>
+          <li><strong>ORM:</strong> модели, сессии, связи между таблицами (relationship)</li>
+          <li><strong>Схема БД:</strong> проектирование таблиц, первичные и внешние ключи</li>
+          <li><strong>Миграции:</strong> понимание принципов изменения схемы</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">🔐</div>
+        <h3>HTTP/HTTPS и безопасность</h3>
+        <p class="skill-desc">Понимание того, как данные передаются по сети и как они защищены.</p>
+        <ul>
+          <li><strong>Протоколы:</strong> HTTP/HTTPS, методы GET/POST, заголовки, статусы</li>
+          <li><strong>TLS/SSL:</strong> принципы шифрования канала, рукопожатие</li>
+          <li><strong>Сертификаты:</strong> структура X.509, цепочка доверия</li>
+          <li><strong>Практика:</strong> работа с HTTPS-эндпоинтами, проверка сертификатов</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">⚡</div>
+        <h3>Многопоточность и asyncio</h3>
+        <p class="skill-desc">Организация конкурентного выполнения задач в Python.</p>
+        <ul>
+          <li><strong>threading:</strong> потоки, блокировки, общие ресурсы</li>
+          <li><strong>asyncio:</strong> корутины, event loop, async/await</li>
+          <li><strong>Выбор подхода:</strong> когда потоки, а когда асинхронность</li>
+          <li><strong>Практика:</strong> параллельные запросы, фоновые задачи</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">🐳</div>
+        <h3>Docker и CI</h3>
+        <p class="skill-desc">Упаковка приложений и автоматизация проверок.</p>
+        <ul>
+          <li><strong>Docker:</strong> Dockerfile, образы, контейнеры</li>
+          <li><strong>docker-compose:</strong> связка приложения и БД в одном окружении</li>
+          <li><strong>CI:</strong> GitHub Actions / GitLab CI — сборка и тесты по коммиту</li>
+          <li><strong>Git:</strong> ветки, коммиты, merge, работа с удалённым репозиторием</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">🧪</div>
+        <h3>Тестирование</h3>
+        <p class="skill-desc">Проверка корректности кода до того, как он попадёт в проект.</p>
+        <ul>
+          <li><strong>pytest:</strong> тестовые функции, фикстуры, параметризация</li>
+          <li><strong>Unit-тесты:</strong> проверка отдельных функций и модулей</li>
+          <li><strong>Изоляция:</strong> тестовые данные, моки (базово)</li>
+          <li><strong>Интеграция с CI:</strong> запуск тестов при каждом пуше</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">📡</div>
+        <h3>Промышленные протоколы</h3>
+        <p class="skill-desc">Направление, которое развиваю дополнительно к основной программе.</p>
+        <ul>
+          <li><strong>MQTT:</strong> publish/subscribe, брокеры, топики</li>
+          <li><strong>OCPP:</strong> обмен данными зарядных станций (базово)</li>
+          <li><strong>Modbus:</strong> принципы обмена с промышленным оборудованием</li>
+          <li><strong>Применение:</strong> IoT и автоматизация</li>
+        </ul>
+      </div>
+
+      <div class="skill-card">
+        <div class="icon">➕</div>
+        <h3>Дополнительные языки</h3>
+        <p class="skill-desc">Знакомство с другими языками для расширения кругозора.</p>
+        <ul>
+          <li><strong>Go:</strong> базовый синтаксис, простые программы</li>
+          <li><strong>C++:</strong> базовый синтаксис, понимание компиляции</li>
+          <li><strong>SQL:</strong> уверенное написание запросов</li>
+          <li><strong>Сравнение подходов:</strong> статическая и динамическая типизация</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEVELS -->
+<section style="background: rgba(30, 41, 59, 0.3);">
+  <div class="container">
+    <h2>Уровень владения</h2>
+    <p class="section-lead">
+      Субъективная оценка: где-то уверенно, где-то — базовое знакомство,
+      которое продолжает расти.
+    </p>
+    <div class="levels">
+
+      <div class="level-item">
+        <div class="level-head"><span>Python 3</span><span>85%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>MySQL / SQLAlchemy</span><span>75%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:75%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>Git / Docker</span><span>70%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:70%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>REST / HTTP</span><span>65%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:65%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>asyncio / threading</span><span>60%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:60%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>pytest</span><span>60%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:60%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>MQTT / OCPP / Modbus</span><span>45%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:45%"></div></div>
+      </div>
+
+      <div class="level-item">
+        <div class="level-head"><span>Go / C++</span><span>40%</span></div>
+        <div class="bar"><div class="bar-fill" style="width:40%"></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section>
+  <div class="container">
+    <h2>Контакты</h2>
+    <div class="contacts">
+    <div class="contact-link">
+  	<span>✉️</span> chernova2384@gmail.com
+    </div>
+      <a href="https://t.me/saygexteam" target="_blank" class="contact-link">
+        <span>✈️</span> Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    © 2026 · Python-разработчик · СПбГУТ им. М. А. Бонч-Бруевича
+  </div>
+</footer>
+
+</body>
+</html>
+```
